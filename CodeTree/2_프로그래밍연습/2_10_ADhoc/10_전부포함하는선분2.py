@@ -15,15 +15,17 @@ x2sort=sorted(arr,key=lambda x : x.x2) #x2순으로 정렬된 arr
 ach=x1sort[1].x1-x1sort[0].x1 #1지웠을때 줄어드는길이
 bch=x2sort[n-1].x2-x2sort[n-2].x2 #2지웠을때 줄어드는길이
 
-# print('ch',ach,bch)
+print('ch',ach,bch)
 
 if ach>bch:
-    # print('x1')
-    # x1sort[0].info()
+    print('x1')
+    x1sort[0].info()
     x1sort.remove(x1sort[0])
+    x2sort.remove(x1sort[0])
 else:
-    # print('x2')
-    # x2sort[n-1].info()
+    print('x2')
+    x2sort[n-1].info()
+    x1sort.remove(x2sort[n-1])
     x2sort.remove(x2sort[n-1])
 
 print(x2sort[len(x2sort)-1].x2-x1sort[0].x1)
