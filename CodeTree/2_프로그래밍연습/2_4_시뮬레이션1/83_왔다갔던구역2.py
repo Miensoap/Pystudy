@@ -1,8 +1,8 @@
-def RL(a):
-    if a=='R':
-        return 1
-    elif a=='L':
-        return -1
+# def RL(a):
+#     if a=='R':
+#         return 1
+#     elif a=='L':
+#         return -1
 
 n =int(input())
 narr=[0 for _ in range(2001)]

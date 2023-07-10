@@ -1,42 +1,14 @@
-def date(year, month, day):
-    if month >= 1 and month <= 12:
-        if month == 2:
-            if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
-                if day >= 1 and day <= 29:
-                    return True
-                else:
-                    return False
-            else:
-                if day >= 1 and day <= 28:
-                    return True
-                else:
-                    return False
-                
-        elif month == 4 or month == 6 or month == 9 or month == 11:
-            if day >= 1 and day <= 30:
-                return True
-            else:
-                return False
-            
-        else:
-            if day >= 1 and day <= 31:
-                return True
-            else:
-                return False
-    else:
-        return False
+def gong_goo(n):
+    if n==1:
+        return arr[0]
+    
+    k=arr[n-1]
+    l=gong_goo(n-1)
 
-year, month, day = map(int, input().split())
-result = date(year, month, day)
-
-if result:
-    if month >= 12 or month <= 2: # 12 1 2 
-        print("Winter")
-    elif month >= 3 or month <= 5: # 3 4 5
-        print("Spring")
-    elif month >= 6 or month <= 8: # 6 7 8
-        print("Summer")
-    elif month >= 9 or month <= 11: 
-        print("Fall")
-else:
-    print("-1")
+    for i in range(2, k*l +1):
+        if i % k == 0 and i % l == 0:
+            return i
+    
+n=int(input())
+arr=list(map(int,input().split()))
+print(gong_goo(n))  
