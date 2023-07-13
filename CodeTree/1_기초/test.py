@@ -1,14 +1,17 @@
-def gong_goo(n):
-    if n==1:
-        return arr[0]
-    
-    k=arr[n-1]
-    l=gong_goo(n-1)
+n = int(input())
 
-    for i in range(2, k*l +1):
-        if i % k == 0 and i % l == 0:
-            return i
-    
-n=int(input())
-arr=list(map(int,input().split()))
-print(gong_goo(n))  
+class su:
+    def init(self, num, _num):
+        self.num, self._num = num, _num
+
+m = list(map(int, input().split()))
+
+judge = []
+for i in range(n):
+    judge.append(su((m[i]), i+1))
+
+judge.sort(key = lambda x : x.num)
+
+print()
+for su in judge:
+    print(su._num, end = ' ')
