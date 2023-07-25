@@ -1,4 +1,5 @@
-import collections
+from collections import deque
+import math
 
 def move(a,b,num):
     dx,dy=[1,0,-1,0],[0,1,0,-1]
@@ -12,47 +13,53 @@ def in_range(nx,ny):
 n,l,r=map(int,input().split())
 arr=[list(map(int,input().split())) for _ in range(n)]
 day_cnt=0
-visited=[[False] * n for _ in range(n)]
 
-def union(now:list):
-    union_col=[]
-    queue=collections.deque()
-    queue.append(now)
-    sumu=0
-    su=0
-    while queue:
-        now=queue.popleft()
-        # if visited[now[0]][now[1]]:
-        #     continue
-        visited[now[0]][now[1]] = True
-        sumu+=arr[now[0]][now[1]]
-        su+=1
-        for i in range(4):
-            visit=move(now[0],now[1],i)
-            if in_range(visit[0],visit[1]) and not visited[visit[0]][visit[1]] and l <= abs(arr[visit[0]][visit[1]]-arr[now[0]][now[1]]) <= r:
-                queue.append(visit)
-                union_col.append(visit)
-                visited[visit[0]][visit[1]] = True
-    
-    if su>1:
-        return sumu//su , union_col
-    else:
-        return -1,[]
+
+def union(i, j):
+    dq = deque()
+    dq.append((i, j))
+    visit[i][j] = True
+    # 연합된 국가 담기
+    union = [(i, j)]
+    count = arr[i][j]  
+
+    while dq:
+        x, y = dq.popleft()
+        for d in range(4):
+            nx,ny=move(x,y,d)
+
+            if not in_range(nx,ny):
+                continue
+            if visit[nx][ny]:
+                continue
+            if l <= abs(arr[nx][ny] - arr[x][y]) <= r: 
+                union.append((nx, ny))
+                visit[nx][ny] = True
+                dq.append((nx, ny))
+                count += arr[nx][ny]
+    for x, y in union:
+        arr[x][y] = math.floor(count /len(union) )
+
+    return len(union)
  
 
 cnt=0
-for i in range(n):
-    for j in range(n):
-        if visited[i][j]:
-            continue  
-        union_user,union_col=union([i,j])[0]
-        # union_col=union([i,j])[1]
-        if union_user >0:
-            for elem in union_col:
-                arr[elem[0]][elem[1]]=union_user
-            cnt+=1
+while True:
+    visit=[[False] * n for _ in range(n)]
+    flag=False
+    
+    for i in range(n):
+        for j in range(n):
+            if not visit[i][j]:
+                if union(i,j)>1:
+                    flag=True
+    
+    if not flag:
+        break
+    cnt+=1
 
 print(cnt)
+
                 
             
 
